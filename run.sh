@@ -1,54 +1,24 @@
 #!/bin/sh
 
-# Define paths for Homarr's data
-HOMARR_CONFIG_PATH="/app/data/configs"
-HOMARR_DATA_PATH="/data"
-HOMARR_ICON_PATH="/app/public/icons"
+# Create required directories for Homarr v1
+mkdir -p /share/homarrv1/db
+mkdir -p /share/homarrv1/redis
+mkdir -p /share/homarrv1/trusted-certificates
 
-# Mapped directories from the host
-PERSISTENT_CONFIG_PATH="/share/homarr/configs"
-PERSISTENT_DATA_PATH="/share/homarr/data"
-PERSISTENT_ICON_PATH="/share/homarr/icon"
+# Set environment variables for Homarr v1
+export DB_URL='/share/homarrv1/db/db.sqlite'
+export DB_DIALECT='sqlite'
+export DB_DRIVER='better-sqlite3'
+export AUTH_PROVIDERS='credentials'
+export REDIS_IS_EXTERNAL='false'
+export NODE_ENV='production'
+export DB_MIGRATIONS_DISABLED='false'
+export SECRET_ENCRYPTION_KEY='dc4a514fc67b4f4e629a99b019759f9f32dc4facb55ff2c1a51862597edfcd6e'
 
-# Ensure the persistent directories exist
-mkdir -p $PERSISTENT_CONFIG_PATH
-mkdir -p $PERSISTENT_DATA_PATH
-mkdir -p $PERSISTENT_ICON_PATH
-
-# Function to sync data from Homarr's directories to persistent storage
-sync_to_persistent() {
-    while true; do
-        cp -R $HOMARR_CONFIG_PATH/* $PERSISTENT_CONFIG_PATH/ 2>/dev/null
-        cp -R $HOMARR_DATA_PATH/* $PERSISTENT_DATA_PATH/ 2>/dev/null
-        cp -R $HOMARR_ICON_PATH/* $PERSISTENT_ICON_PATH/ 2>/dev/null
-        sleep 60  # Sync every 60 seconds, adjust as needed
-    done
-}
-
-# Sync data to Homarr's directories on startup
-cp -R $PERSISTENT_CONFIG_PATH/* $HOMARR_CONFIG_PATH/ 2>/dev/null
-cp -R $PERSISTENT_DATA_PATH/* $HOMARR_DATA_PATH/ 2>/dev/null
-cp -R $PERSISTENT_ICON_PATH/* $HOMARR_ICON_PATH/ 2>/dev/null
-
-# Start continuous sync in the background
-sync_to_persistent &
-
-# Exporting hostname
+# Exporting hostname for nginx configuration
 echo "Exporting hostname..."
-export NEXTAUTH_URL_INTERNAL="http://$HOSTNAME:${PORT:-7575}"
+export HOSTNAME="${HOSTNAME:-localhost}"
 
-# Migrating database
-echo "Migrating database..."
-cd ./migrate; yarn db:migrate & PID=$!
-# Wait for migration to finish
-wait $PID
-
-# Check and copy default.json if necessary
-cp -n /app/data/default.json /app/data/configs/default.json
-
-# Starting Homarr
-echo "Starting production server..."
-node /app/server.js & PID=$!
-
-# Wait for Homarr server process to end
-wait $PID
+# Run the original Homarr v1 entrypoint and run script
+echo "Starting Homarr v1..."
+exec /app/entrypoint.sh sh /app/run.sh
