@@ -4,14 +4,14 @@ Welcome to the **Homarr v1 Server for Home Assistant** repository! This add-on i
 
 ## 🎉 Features
 
-- **Independent Hosting**: Seamlessly runs Homarr v1 as a standalone service within Home Assistant.
+- **Independent Hosting**: Seamlessly runs Homarr as a standalone service within Home Assistant.
 - **Direct Access**: Homarr is available at `http://<your-home-assistant-ip>:7575`.
 - **Persistent Storage**: Configurations and data are preserved across restarts.
 - **Samba Access**: Data is accessible via Samba at `\\your-home-assistant-ip\share\homarrv1\`.
 
 ## 💡 About Homarr v1
 
-Homarr v1 is a complete rewrite of the popular self-hosted dashboard that allows you to centralize and manage access to your web services and frequently visited websites. It features a modern architecture with improved performance, better security, and enhanced customization options. Read more about Homarr v1 [here](https://homarr.dev/).
+Homarr v1+ is a complete rewrite of the popular self-hosted dashboard that allows you to centralize and manage access to your web services and frequently visited websites. It features a modern architecture with improved performance, better security, and enhanced customization options. Read more about Homarr [here](https://homarr.dev/).
 
 ## 🚀 Quick Start
 
@@ -47,7 +47,7 @@ If you're upgrading from Homarr v0.x:
 
 ## Updating
 
-Whenever there's an update to Homarr v1 you can try updating the addon by rebuilding on the addon-page in Home Assistant. However, there is no guarantee that it will work. Please open an issue if you face difficulties after upgrading.
+Whenever there's an update to Homarr you can try updating the addon by rebuilding on the addon-page in Home Assistant. However, there is no guarantee that it will work. Please open an issue if you face difficulties after upgrading.
 
 ## 📚 Documentation & Support
 
