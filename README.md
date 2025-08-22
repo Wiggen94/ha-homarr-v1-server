@@ -51,7 +51,7 @@ Whenever there's an update to Homarr you can try updating the addon by rebuildin
 
 ## 📚 Documentation & Support
 
-For more detailed setup and configuration instructions, visit [Homarr's official documentation](https://homarr.dev/docs/about).
+For more detailed setup and configuration instructions, visit [Homarr's official documentation]([https://homarr.dev/docs/about](https://homarr.dev/docs/getting-started/)).
 
 ## 🤝 Contributing
 
