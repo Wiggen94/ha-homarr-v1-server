@@ -1,8 +1,13 @@
 name: "Homarr"
-description: "Homarr v1 integration for Home Assistant"
-version: "1.0.0"
+description: "A sleek, modern dashboard for your server"
+version: "1.1.0"
 slug: "homarr_addon"
 init: false
+ingress: false
+panel_iframe: true
+webui: "http://[HOST]:[PORT:7575]"
+panel_icon: "mdi:view-dashboard-variant"
+panel_title: "Homarr"
 arch:
   - aarch64
   - amd64
@@ -13,3 +18,66 @@ ports:
   7575/tcp: 7575
 map:
   - share:rw
+options:
+  security:
+    auth_credentials_enabled: true
+    auth_session_expiry_time: "30d"
+    secret_encryption_key: "dc4a514fc67b4f4e629a99b019759f9f32dc4facb55ff2c1a51862597edfcd6e"
+  database:
+    db_url: "/share/homarrv1/db/db.sqlite"
+    db_dialect: "sqlite"
+  auth_oidc:
+    auth_oidc_enabled: false
+  auth_ldap:
+    auth_ldap_enabled: false
+  docker_socket_proxy:
+    docker_proxy_enabled: false
+
+schema:
+  security:
+    auth_credentials_enabled: "bool"
+    auth_logout_redirect_url: "str?"
+    auth_session_expiry_time: "str"
+    secret_encryption_key: "password"
+
+  docker_socket_proxy:
+    docker_proxy_enabled: "bool"
+    docker_hostnames: "str?"
+    docker_ports: "str?"
+  
+  auth_oidc:
+    auth_oidc_enabled: "bool"
+    auth_oidc_issuer: "str?"
+    auth_oidc_client_id: "str?"
+    auth_oidc_client_secret: "password?"
+    auth_oidc_client_name: "str?"
+    auth_oidc_auto_login: "bool?"
+    auth_oidc_scope_overwrite: "str?"
+    auth_oidc_groups_attribute: "str?"
+    auth_oidc_name_attribute_overwrite: "str?"
+    auth_oidc_force_userinfo: "bool?"
+    auth_oidc_enable_dangerous_account_linking: "bool?"
+  
+  auth_ldap:
+    auth_ldap_enabled: "bool"
+    auth_ldap_uri: "str?"
+    auth_ldap_base: "str?"
+    auth_ldap_bind_dn: "str?"
+    auth_ldap_bind_password: "password?"
+    auth_ldap_username_attribute: "str?"
+    auth_ldap_user_mail_attribute: "str?"
+    auth_ldap_group_class: "str?"
+    auth_ldap_group_member_attribute: "str?"
+    auth_ldap_group_member_user_attribute: "str?"
+    auth_ldap_search_scope: "str?"
+    auth_ldap_username_filter_extra_arg: "str?"
+    auth_ldap_group_filter_extra_arg: "str?"
+
+  database:
+    db_url: "str"
+    db_dialect: list(sqlite|mysql|postgresql)
+    db_host: "str?"
+    db_port: "str?"
+    db_name: "str?"
+    db_user: "str?"
+    db_password: "password?"
